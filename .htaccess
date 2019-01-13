@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$
+# RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
+
+# RewriteBase /academyphp/lesson11/
+# RewriteCond %{REQUEST_URI} !^/files/
+# RewriteRule ^(.*)$ login.php [L,QSA]
+
+# Redirect 301 /old_page.html /new_page
