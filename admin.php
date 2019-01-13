@@ -28,7 +28,6 @@ if( count($_POST) > 0) {
 }
 
 $connection = new PDO('mysql:host='.DBHost.'; dbname='.DBName.'; charset=utf8', DBUser, DBPass);
-
 $update = $connection->prepare("update `comments` set status=:status where id=:id");
 $comments = $connection->query("select * from `comments` where status='new'");
 
@@ -65,6 +64,8 @@ $comments = $connection->query("select * from `comments` where status='new'");
 <?php
 
 foreach ($_POST as $num=>$status){
+  echo $num . PHP_EOL;
+  echo $status . PHP_EOL;
     if(($_SESSION['role'] == 'moderator' && $status=='rj') || $_SESSION['role'] == 'admin')
         $update->execute(array('status'=>$status, 'id'=>$num));
 }

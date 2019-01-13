@@ -2,6 +2,7 @@
 session_start();
 
 require 'config.php';
+
 if( $_POST['admin']) {
 
   header('Location: admin.php');
@@ -26,6 +27,13 @@ $languages = $connection->query('select * from `languages`');
 $interests = $connection->query('select * from `interests`');
 
 $prep = $connection->prepare("insert into `comments` (`comment`, `name`) values ( :comment, :name)");
+
+//echo "<pre>";
+//var_dump($_SESSION);
+//var_dump($_POST);
+//var_dump($_FILES);
+//echo "</pre>";
+
 
 ?>
 
@@ -62,11 +70,37 @@ $prep = $connection->prepare("insert into `comments` (`comment`, `name`) values 
     <div class="wrapper">
         <div class="sidebar-wrapper">
             <div class="profile-container">
-                <img class="profile" src="assets/images/profile.png" alt="" />
+
+                <img  class="profile" src="assets/images/profile.png" alt="" />
+
                 <h1 class="name"><?=$profile[0][1]?></h1>
                 <h3 class="tagline"><?=$profile[0][5]?></h3>
+
+              <?php if($_SESSION['role'] == 'admin') { ?>
+
+              <form method="POST" enctype="multipart/form-data">
+                <!--              <input type="hidden" name="MAX_FILE_SIZE" value="300000"/>-->
+                <!--              <input name="changeAvatar" type="file" accept="image/jpeg,image/png">-->
+                <input name="file" type="file" accept="image/jpg,image/png">
+                <button class="btn-b" name="changeAvatar">Установить</button>
+              </form>
+
+              <?php } ?>
+
             </div><!--//profile-container-->
-            
+
+
+
+          <?php
+                      if( isset($_POST['changeAvatar']))
+                      if( $_SESSION['login'] && $_SESSION['pass'] && $_SESSION['role'] == 'admin'){
+                        move_uploaded_file($_FILES['file']['tmp_name'], 'assets/images/profile.png');
+                      }
+
+            ?>
+
+
+
             <div class="contact-container container-block">
                 <ul class="list-unstyled contact-list">
                     <li class="email"><i class="fa fa-envelope"></i><a href="mailto: yourname@email.com"><?=$profile[0][2]?></a></li>

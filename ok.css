@@ -2,3 +2,12 @@
     display: flex;
     flex-direction: row;
 }
+.btn-b {
+    color: #000;
+}
+
+.profile {
+    width: 100px;
+    height: 100px;
+
+}
