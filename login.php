@@ -2,6 +2,8 @@
 session_start();
 ini_set('session.gc.maxlifetime', 3600);
 
+require 'config.php';
+
 //var_dump($_POST);
 //var_dump($_SESSION);
 
@@ -11,7 +13,7 @@ if( $_SESSION['login'] && $_SESSION['pass'] ){
 }
 
 if( $_POST['login']){
-  $connection = new PDO('mysql:host=jktu.ru; dbname=selto149_php; charset=utf8', 'selto149_php', 'AcademyPHP2@');
+  $connection = new PDO('mysql:host='.DBHost.'; dbname='.DBName.'; charset=utf8', DBUser, DBPass);
   $login = $connection->query('select * from `login`;');
   foreach ( $login as $log){
     if($_POST['login']== $log['user']  && md5($_POST['pass']) == $log['pass']){
@@ -33,7 +35,7 @@ if( $_POST['login']){
 //    message( "Пароли не совпадают");
 //
 //  } else {
-//    $connection = new PDO('mysql:host=jktu.ru; dbname=selto149_php; charset=utf8', 'selto149_php', 'AcademyPHP2@');
+//    $connection = new PDO('mysql:host='.DBHost.'; dbname='.DBName.'; charset=utf8', DBUser, DBPass);
 //    $newlogin = $_POST['newlogin'];
 //    $email = $_POST['email'];
 //    $login = $connection->prepare('select user from `login` where user=:newlogin or email=:email;');
@@ -58,7 +60,7 @@ if( $_POST['login']){
 //  if($_SESSION['confirmcode']) $confirmcode = $_SESSION['confirmcode'];
 //  if( $cc != $confirmcode) message("Неверный код подтверждения"); //  $cc != $confirmcode" );
 //  else {
-//    $connection = new PDO('mysql:host=jktu.ru; dbname=selto149_php; charset=utf8', 'selto149_php', 'AcademyPHP2@');
+//    $connection = new PDO('mysql:host='.DBHost.'; dbname='.DBName.'; charset=utf8', DBUser, DBPass);
 //    $login = $connection->prepare("insert into `login` (`user`, `pass`, `email`) values (:user, :pass, :email);");
 //      if ($login->execute(array(':user' => $_SESSION['newlogin'],
 //                                ':pass' => $_SESSION['newpass'],

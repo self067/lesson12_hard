@@ -1,14 +1,15 @@
 <?php
 session_start();
 
+require 'config.php';
 if( $_POST['admin']) {
 
   header('Location: admin.php');
   die();
 }
 
+$connection = new PDO('mysql:host='.DBHost.'; dbname='.DBName.'; charset=utf8', DBUser, DBPass);
 
-$connection = new PDO('mysql:host=jktu.ru; dbname=selto149_php; charset=utf8', 'selto149_php', 'AcademyPHP2@');
 if ($connection->errorCode()){
   printf("Не удалось подключиться: %s\n", $connection->errorCode());
 //  exit();
